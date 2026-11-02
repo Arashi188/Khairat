@@ -75,25 +75,8 @@
         }
 
         .opening-content h2 {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             font-size: 1.5rem;
-        }
-
-        .name-input {
-            width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--accent-rose);
-            background: rgba(0,0,0,0.3);
-            border-radius: 30px;
-            color: white;
-            font-family: var(--font-body);
-            text-align: center;
-            outline: none;
-        }
-
-        .name-input::placeholder {
-            color: rgba(255,255,255,0.4);
         }
 
         .btn {
@@ -178,6 +161,21 @@
             margin: 10px auto 0;
         }
 
+        /* --- LETTER SECTION --- */
+        .letter-container {
+            background: linear-gradient(135deg, rgba(183, 110, 121, 0.1), rgba(212, 175, 55, 0.05));
+            border: 1px solid rgba(183, 110, 121, 0.3);
+            padding: 2rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .letter-container p {
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
         /* --- GALLERY --- */
         .gallery-grid {
             display: grid;
@@ -240,21 +238,6 @@
             cursor: pointer;
         }
 
-        /* --- LETTER SECTION --- */
-        .letter-container {
-            background: linear-gradient(135deg, rgba(183, 110, 121, 0.1), rgba(212, 175, 55, 0.05));
-            border: 1px solid rgba(183, 110, 121, 0.3);
-            padding: 2rem 1.5rem;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            line-height: 1.8;
-        }
-
-        .letter-container p {
-            margin-bottom: 1rem;
-            color: var(--text-main);
-        }
-
         /* --- MUSIC PLAYER --- */
         .music-player {
             position: fixed;
@@ -315,8 +298,7 @@
     <!-- OPENING SCREEN -->
     <div id="opening-screen">
         <div class="opening-content">
-            <h2>Who is opening this? 🎁</h2>
-            <input type="text" id="nameInput" class="name-input" placeholder="Type your name...">
+            <h2>A special surprise for you 🎁</h2>
             <button class="btn" id="openBtn">Tap to Open</button>
         </div>
     </div>
@@ -328,7 +310,7 @@
         <div class="scroll-indicator">▼</div>
     </header>
 
-    <!-- THE LETTER (Now comes first after the hero) -->
+    <!-- THE LETTER -->
     <section id="letter">
         <h2 class="section-title">A Letter For You</h2>
         <div class="letter-container">
@@ -348,9 +330,9 @@
         </div>
     </section>
 
-    <!-- PHOTO GALLERY (Moved down after the message) -->
+    <!-- PHOTO GALLERY -->
     <section id="gallery">
-        <h2 class="section-title">Beautiful Memories</h2>
+        <h2 class="section-title">I love you soo soo much my Khairat</h2>
         <div class="gallery-grid">
             <!-- MAKE SURE YOUR 4 PHOTOS ARE IN THE SAME FOLDER AS THIS HTML FILE -->
             <div class="gallery-item"><img src="photo1.jpg" loading="lazy" alt="Memory 1" onerror="this.src='https://placehold.co/400x400/2a151b/d4af37?text=Photo+1'"></div>
@@ -386,7 +368,6 @@
         // --- 1. OPENING SCREEN & AUDIO UNLOCK ---
         const openingScreen = document.getElementById('opening-screen');
         const openBtn = document.getElementById('openBtn');
-        const nameInput = document.getElementById('nameInput');
         const bgMusic = document.getElementById('bg-music');
         const playIcon = document.getElementById('play-icon');
         const pauseIcon = document.getElementById('pause-icon');
@@ -395,9 +376,8 @@
         let isPlaying = false;
 
         openBtn.addEventListener('click', () => {
-            // Defaults to Khairat if the input is left blank
-            const name = nameInput.value.trim() || 'Khairat';
-            document.getElementById('typewriter').setAttribute('data-name', name);
+            // Name is now hardcoded since the input box is removed
+            document.getElementById('typewriter').setAttribute('data-name', 'Khairat');
             
             // Fade out opening screen
             openingScreen.style.opacity = '0';
@@ -412,12 +392,10 @@
         // --- 2. TYPEWRITER EFFECT ---
         function startTypewriter() {
             const name = document.getElementById('typewriter').getAttribute('data-name');
-            // Updated text to say "Happy Birthday my [Name]"
             const text = `Happy Birthday my ${name}! 🎂`;
             const element = document.getElementById('typewriter');
             let i = 0;
             
-            // Clear text in case it was clicked twice
             element.innerHTML = ''; 
             
             function type() {
@@ -489,7 +467,7 @@
             }
         });
 
-        // --- 6. CONFETTI CANVAS SCRIPT (Stops after 3 seconds) ---
+        // --- 6. CONFETTI CANVAS SCRIPT ---
         const canvas = document.getElementById('confetti-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -527,7 +505,6 @@
         function animateConfetti() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // Stop drawing if time is up
             if (Date.now() > confettiEndTime) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 return;
@@ -545,7 +522,6 @@
                 ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
                 ctx.restore();
 
-                // Reset particles that go off screen to keep the burst going
                 if (p.y > canvas.height) {
                     particles[index].y = -10;
                     particles[index].x = Math.random() * canvas.width;
