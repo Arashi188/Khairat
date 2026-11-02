@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Khairat!</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CSS VARIABLES --- */
+        :root {
+            --bg-color: #1a0b10;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-main: #fcf6f5;
+            --text-muted: #d4c1c4;
+            --accent-gold: #d4af37;
+            --accent-rose: #b76e79;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Poppins', sans-serif;
+        }
+
+        /* --- GLOBAL STYLES --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 50% 0%, #3a1521 0%, var(--bg-color) 70%);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            color: var(--accent-gold);
+        }
+
+        p {
+            font-weight: 300;
+            color: var(--text-muted);
+        }
+
+        /* --- OPENING SCREEN --- */
+        #opening-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .opening-content {
+            text-align: center;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 90%;
+            width: 350px;
+        }
+
+        .opening-content h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .name-input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--accent-rose);
+            background: rgba(0,0,0,0.3);
+            border-radius: 30px;
+            color: white;
+            font-family: var(--font-body);
+            text-align: center;
+            outline: none;
+        }
+
+        .name-input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent-rose), var(--accent-gold));
+            color: #1a0b10;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(183, 110, 121, 0.4);
+        }
+
+        /* --- HERO SECTION --- */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        #typewriter {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            min-height: 3.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            max-width: 600px;
+            opacity: 0;
+            animation: fadeIn 2s 2s forwards;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            animation: bounce 2s infinite;
+            opacity: 0.6;
+        }
+
+        /* --- SECTIONS --- */
+        section {
+            padding: 4rem 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background: var(--accent-rose);
+            margin: 10px auto 0;
+        }
+
+        /* --- GALLERY --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 1rem 0;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1 / 1;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border 0.3s ease, transform 0.3s ease;
+            background: #2a151b;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            border-color: var(--accent-gold);
+            transform: scale(1.02);
+        }
+
+        /* --- LIGHTBOX --- */
+        .lightbox {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            padding: 2rem;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* --- LETTER SECTION --- */
+        .letter-container {
+            background: linear-gradient(135deg, rgba(183, 110, 121, 0.1), rgba(212, 175, 55, 0.05));
+            border: 1px solid rgba(183, 110, 121, 0.3);
+            padding: 2rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .letter-container p {
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        /* --- INTERACTIVE CAKE --- */
+        .interactive-section {
+            text-align: center;
+        }
+
+        .cake-container {
+            font-size: 5rem;
+            cursor: pointer;
+            display: inline-block;
+            transition: transform 0.2s ease;
+            user-select: none;
+            margin: 2rem 0;
+        }
+
+        .cake-container:hover {
+            transform: scale(1.1);
+        }
+
+        .cake-container.blown-out {
+            cursor: default;
+        }
+
+        .wish-message {
+            display: none;
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+            margin-top: 1rem;
+            animation: fadeIn 1s forwards;
+        }
+
+        /* --- MUSIC PLAYER --- */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .music-player svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--accent-gold);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @media (min-width: 768px) {
+            #typewriter { font-size: 4rem; min-height: 5rem; }
+            .gallery-grid { grid-template-columns: repeat(4, 1fr); }
+            .letter-container { padding: 3rem; font-size: 1.05rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CONFETTI CANVAS -->
+    <canvas id="confetti-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;"></canvas>
+
+    <!-- OPENING SCREEN -->
+    <div id="opening-screen">
+        <div class="opening-content">
+            <h2>Who is opening this? 🎁</h2>
+            <input type="text" id="nameInput" class="name-input" placeholder="Type your name...">
+            <button class="btn" id="openBtn">Tap to Open</button>
+        </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <header id="hero">
+        <h1 id="typewriter"></h1>
+        <p class="subtitle">To my best girl, on your special day. I hope this new age brings you everything beautiful you've ever wished for.</p>
+        <div class="scroll-indicator">▼</div>
+    </header>
+
+    <!-- PHOTO GALLERY (4 Images) -->
+    <section id="gallery">
+        <h2 class="section-title">Beautiful Memories</h2>
+        <div class="gallery-grid">
+            <!-- ADD YOUR 4 PHOTOS TO THE SAME FOLDER AS THIS HTML FILE AND NAME THEM photo1.jpg, photo2.jpg, etc. -->
+            <div class="gallery-item"><img src="photo1.jpg" loading="lazy" alt="Memory 1" onerror="this.src='https://placehold.co/400x400/2a151b/d4af37?text=Photo+1'"></div>
+            <div class="gallery-item"><img src="photo2.jpg" loading="lazy" alt="Memory 2" onerror="this.src='https://placehold.co/400x400/2a151b/d4af37?text=Photo+2'"></div>
+            <div class="gallery-item"><img src="photo3.jpg" loading="lazy" alt="Memory 3" onerror="this.src='https://placehold.co/400x400/2a151b/d4af37?text=Photo+3'"></div>
+            <div class="gallery-item"><img src="photo4.jpg" loading="lazy" alt="Memory 4" onerror="this.src='https://placehold.co/400x400/2a151b/d4af37?text=Photo+4'"></div>
+        </div>
+    </section>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <img src="" alt="Enlarged photo" id="lightbox-img">
+    </div>
+
+    <!-- THE LETTER -->
+    <section id="letter">
+        <h2 class="section-title">A Letter For You</h2>
+        <div class="letter-container">
+            <p>Happy birthday to my best girlrrr ❤️🥹🎂🫶🏽</p>
+            
+            <p>Honestly, I don’t even know where to start because you mean so much to me, and I just want you to know how special you are to me. First of all, I’m so happy to celebrate another year of your life, and I pray this new age brings you everything beautiful you’ve ever wished for. May Allah bless you, protect you, guide you, and make everything you lay your hands on successful. You deserve nothing but happiness, genuine love, peace of mind, and endless blessings. ❤️🤲🏽</p>
+            
+            <p>But honestly, one thing that has been on my mind is how much I’m going to miss you now that you’ve graduated. 😭💔 The thought of not seeing you as often as I used to is actually getting to me because I’ve gotten so used to having you around. The random moments, seeing you, talking to you, laughing together, and just knowing you’re somewhere close by. I don’t think you understand how much I’m going to miss all those little things. It’s crazy how someone can become such an important part of your everyday life without you even realizing just how much you’ve gotten attached to having them around until things start changing.</p>
+            
+            <p>I know graduation is a beautiful thing, and I’m genuinely happy for you because you deserve every good thing coming your way. I’m proud of you, and I pray this is just the beginning of greater things in your life. But as happy as I am for you, a part of me is sad because I know things won’t be exactly the same anymore. We might not get to see each other as often, and we won’t have those random everyday moments like before, and honestly, I’m going to miss that so much. 🥹❤️</p>
+            
+            <p>On your birthday, I just want you to know that I love and appreciate you so much, and I’m really going to miss having you around. I pray that life treats you kindly, that your dreams come true, and that you never lack reasons to smile. May this new chapter bring you opportunities that exceed your expectations and happiness that stays with you for a long time.</p>
+            
+            <p>Happy birthday once again to my beautiful best girl. ❤️🎂🫂 Enjoy your day, allow yourself to be celebrated, and never forget how special you are to me. I might not get to see you as often anymore, but that doesn’t mean you’ll matter any less to me. If anything, this whole thing is making me realize even more how much I value having you in my life.</p>
+            
+            <p>I’m going to miss you, girl, more than you can imagine. ❤️ I love you plenty, and I’m rooting for you always. Happy birthday, my girl. May this new age be your absolute best one yet. 🥹❤️🎉</p>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE SECTION -->
+    <section id="interactive" class="interactive-section">
+        <h2 class="section-title">Make a Wish</h2>
+        <p>Tap the cake to blow out the candle!</p>
+        <div class="cake-container" id="cake">🎂🕯️</div>
+        <div class="wish-message" id="wish-message">Yay! Wish made! ✨ May all your dreams come true.</div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        Made with love from your boy to you
+    </footer>
+
+    <!-- MUSIC PLAYER -->
+    <!-- MAKE SURE YOUR AUDIO FILE IS NAMED birthday-song.mp3 AND IS IN THE SAME FOLDER -->
+    <audio id="bg-music" loop>
+        <source src="birthday-song.mp3" type="audio/mpeg">
+    </audio>
+    <div class="music-player" id="music-toggle">
+        <!-- Play Icon -->
+        <svg id="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <!-- Pause Icon (Hidden by default) -->
+        <svg id="pause-icon" style="display:none;" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    </div>
+
+    <script>
+        // --- 1. OPENING SCREEN & AUDIO UNLOCK ---
+        const openingScreen = document.getElementById('opening-screen');
+        const openBtn = document.getElementById('openBtn');
+        const nameInput = document.getElementById('nameInput');
+        const bgMusic = document.getElementById('bg-music');
+        const playIcon = document.getElementById('play-icon');
+        const pauseIcon = document.getElementById('pause-icon');
+        const musicToggle = document.getElementById('music-toggle');
+        
+        let isPlaying = false;
+
+        openBtn.addEventListener('click', () => {
+            // Defaults to Khairat if the input is left blank
+            const name = nameInput.value.trim() || 'Khairat';
+            document.getElementById('typewriter').setAttribute('data-name', name);
+            
+            // Fade out opening screen
+            openingScreen.style.opacity = '0';
+            setTimeout(() => {
+                openingScreen.style.visibility = 'hidden';
+                startTypewriter();
+                startConfetti();
+                playMusic();
+            }, 800);
+        });
+
+        // --- 2. TYPEWRITER EFFECT ---
+        function startTypewriter() {
+            const name = document.getElementById('typewriter').getAttribute('data-name');
+            const text = `Happy Birthday, ${name}! 🎂`;
+            const element = document.getElementById('typewriter');
+            let i = 0;
+            
+            // Clear text in case it was clicked twice
+            element.innerHTML = ''; 
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, 100);
+                }
+            }
+            type();
+        }
+
+        // --- 3. MUSIC PLAYER LOGIC ---
+        function playMusic() {
+            bgMusic.volume = 0.5;
+            bgMusic.play().then(() => {
+                isPlaying = true;
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+            }).catch(e => console.log("Audio play failed. Make sure your audio file is in the folder and named correctly.", e));
+        }
+
+        musicToggle.addEventListener('click', () => {
+            if (isPlaying) {
+                bgMusic.pause();
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+            } else {
+                bgMusic.play();
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // --- 4. SCROLL ANIMATIONS ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // --- 5. LIGHTBOX LOGIC ---
+        const galleryItems = document.querySelectorAll('.gallery-item img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        galleryItems.forEach(img => {
+            img.addEventListener('click', () => {
+                lightbox.classList.add('active');
+                lightboxImg.src = img.src;
+            });
+        });
+
+        lightboxClose.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+            }
+        });
+
+        // --- 6. INTERACTIVE CAKE ---
+        const cake = document.getElementById('cake');
+        const wishMessage = document.getElementById('wish-message');
+        let cakeBlown = false;
+
+        cake.addEventListener('click', () => {
+            if (!cakeBlown) {
+                cake.innerHTML = '🎂💨'; // Candle blown out
+                cake.classList.add('blown-out');
+                wishMessage.style.display = 'block';
+                startConfetti();
+                cakeBlown = true;
+            }
+        });
+
+        // --- 7. CONFETTI CANVAS SCRIPT (Stops after 3 seconds) ---
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let animationId;
+        let confettiEndTime = 0;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function startConfetti() {
+            particles = [];
+            confettiEndTime = Date.now() + 3000; // Confetti lasts for 3 seconds only
+            
+            for (let i = 0; i < 150; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    w: Math.random() * 10 + 5,
+                    h: Math.random() * 10 + 5,
+                    color: ['#d4af37', '#b76e79', '#fcf6f5', '#ffd700'][Math.floor(Math.random() * 4)],
+                    vy: Math.random() * 3 + 2,
+                    vx: Math.random() * 2 - 1,
+                    rot: Math.random() * 360,
+                    rotSpeed: Math.random() * 5 - 2.5
+                });
+            }
+            if (animationId) cancelAnimationFrame(animationId);
+            animateConfetti();
+        }
+
+        function animateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Stop drawing if time is up
+            if (Date.now() > confettiEndTime) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                return;
+            }
+
+            particles.forEach((p, index) => {
+                p.y += p.vy;
+                p.x += p.vx;
+                p.rot += p.rotSpeed;
+
+                ctx.save();
+                ctx.translate(p.x + p.w / 2, p.y + p.h / 2);
+                ctx.rotate(p.rot * Math.PI / 180);
+                ctx.fillStyle = p.color;
+                ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                ctx.restore();
+
+                // Reset particles that go off screen to keep the burst going
+                if (p.y > canvas.height) {
+                    particles[index].y = -10;
+                    particles[index].x = Math.random() * canvas.width;
+                }
+            });
+            
+            animationId = requestAnimationFrame(animateConfetti);
+        }
+    </script>
+</body>
+</html>
