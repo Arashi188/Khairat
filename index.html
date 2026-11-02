@@ -255,37 +255,6 @@
             color: var(--text-main);
         }
 
-        /* --- INTERACTIVE CAKE --- */
-        .interactive-section {
-            text-align: center;
-        }
-
-        .cake-container {
-            font-size: 5rem;
-            cursor: pointer;
-            display: inline-block;
-            transition: transform 0.2s ease;
-            user-select: none;
-            margin: 2rem 0;
-        }
-
-        .cake-container:hover {
-            transform: scale(1.1);
-        }
-
-        .cake-container.blown-out {
-            cursor: default;
-        }
-
-        .wish-message {
-            display: none;
-            font-family: var(--font-heading);
-            font-size: 1.5rem;
-            color: var(--accent-gold);
-            margin-top: 1rem;
-            animation: fadeIn 1s forwards;
-        }
-
         /* --- MUSIC PLAYER --- */
         .music-player {
             position: fixed;
@@ -355,29 +324,11 @@
     <!-- HERO SECTION -->
     <header id="hero">
         <h1 id="typewriter"></h1>
-        <p class="subtitle">To my best girl, on your special day. I hope this new age brings you everything beautiful you've ever wished for.</p>
+        <p class="subtitle">Happy birthday, my sweet sweeet girl. ❤️<br><br>I pray Almighty Allah grants all your heart desires and blesses you beyond your expectations.</p>
         <div class="scroll-indicator">▼</div>
     </header>
 
-    <!-- PHOTO GALLERY (4 Images) -->
-    <section id="gallery">
-        <h2 class="section-title">Beautiful Memories</h2>
-        <div class="gallery-grid">
-            <!-- ADD YOUR 4 PHOTOS TO THE SAME FOLDER AS THIS HTML FILE AND NAME THEM photo1.jpg, photo2.jpg, etc. -->
-            <div class="gallery-item"><img src="photo1.jpg" loading="lazy" alt="Memory 1" onerror="this.src='https://placehold.co/400x400/2a151b/d4af37?text=Photo+1'"></div>
-            <div class="gallery-item"><img src="photo2.jpg" loading="lazy" alt="Memory 2" onerror="this.src='https://placehold.co/400x400/2a151b/d4af37?text=Photo+2'"></div>
-            <div class="gallery-item"><img src="photo3.jpg" loading="lazy" alt="Memory 3" onerror="this.src='https://placehold.co/400x400/2a151b/d4af37?text=Photo+3'"></div>
-            <div class="gallery-item"><img src="photo4.jpg" loading="lazy" alt="Memory 4" onerror="this.src='https://placehold.co/400x400/2a151b/d4af37?text=Photo+4'"></div>
-        </div>
-    </section>
-
-    <!-- LIGHTBOX -->
-    <div class="lightbox" id="lightbox">
-        <span class="lightbox-close" id="lightbox-close">&times;</span>
-        <img src="" alt="Enlarged photo" id="lightbox-img">
-    </div>
-
-    <!-- THE LETTER -->
+    <!-- THE LETTER (Now comes first after the hero) -->
     <section id="letter">
         <h2 class="section-title">A Letter For You</h2>
         <div class="letter-container">
@@ -397,21 +348,30 @@
         </div>
     </section>
 
-    <!-- INTERACTIVE SECTION -->
-    <section id="interactive" class="interactive-section">
-        <h2 class="section-title">Make a Wish</h2>
-        <p>Tap the cake to blow out the candle!</p>
-        <div class="cake-container" id="cake">🎂🕯️</div>
-        <div class="wish-message" id="wish-message">Yay! Wish made! ✨ May all your dreams come true.</div>
+    <!-- PHOTO GALLERY (Moved down after the message) -->
+    <section id="gallery">
+        <h2 class="section-title">Beautiful Memories</h2>
+        <div class="gallery-grid">
+            <!-- MAKE SURE YOUR 4 PHOTOS ARE IN THE SAME FOLDER AS THIS HTML FILE -->
+            <div class="gallery-item"><img src="photo1.jpg" loading="lazy" alt="Memory 1" onerror="this.src='https://placehold.co/400x400/2a151b/d4af37?text=Photo+1'"></div>
+            <div class="gallery-item"><img src="photo2.jpg" loading="lazy" alt="Memory 2" onerror="this.src='https://placehold.co/400x400/2a151b/d4af37?text=Photo+2'"></div>
+            <div class="gallery-item"><img src="photo3.jpg" loading="lazy" alt="Memory 3" onerror="this.src='https://placehold.co/400x400/2a151b/d4af37?text=Photo+3'"></div>
+            <div class="gallery-item"><img src="photo4.jpg" loading="lazy" alt="Memory 4" onerror="this.src='https://placehold.co/400x400/2a151b/d4af37?text=Photo+4'"></div>
+        </div>
     </section>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <img src="" alt="Enlarged photo" id="lightbox-img">
+    </div>
 
     <!-- FOOTER -->
     <footer>
-        Made with love from your boy to you
+        Made with love for my sweet girl, Khairat. ❤️ | &copy; 2026
     </footer>
 
     <!-- MUSIC PLAYER -->
-    <!-- MAKE SURE YOUR AUDIO FILE IS NAMED birthday-song.mp3 AND IS IN THE SAME FOLDER -->
     <audio id="bg-music" loop>
         <source src="birthday-song.mp3" type="audio/mpeg">
     </audio>
@@ -452,7 +412,8 @@
         // --- 2. TYPEWRITER EFFECT ---
         function startTypewriter() {
             const name = document.getElementById('typewriter').getAttribute('data-name');
-            const text = `Happy Birthday, ${name}! 🎂`;
+            // Updated text to say "Happy Birthday my [Name]"
+            const text = `Happy Birthday my ${name}! 🎂`;
             const element = document.getElementById('typewriter');
             let i = 0;
             
@@ -528,22 +489,7 @@
             }
         });
 
-        // --- 6. INTERACTIVE CAKE ---
-        const cake = document.getElementById('cake');
-        const wishMessage = document.getElementById('wish-message');
-        let cakeBlown = false;
-
-        cake.addEventListener('click', () => {
-            if (!cakeBlown) {
-                cake.innerHTML = '🎂💨'; // Candle blown out
-                cake.classList.add('blown-out');
-                wishMessage.style.display = 'block';
-                startConfetti();
-                cakeBlown = true;
-            }
-        });
-
-        // --- 7. CONFETTI CANVAS SCRIPT (Stops after 3 seconds) ---
+        // --- 6. CONFETTI CANVAS SCRIPT (Stops after 3 seconds) ---
         const canvas = document.getElementById('confetti-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
